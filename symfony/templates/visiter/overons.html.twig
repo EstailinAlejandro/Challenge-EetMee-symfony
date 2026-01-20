@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello VisiterController!{% endblock %}
+
+{% block body %}
+   <div class="row justify-content-center mt-4">
+
+       <div class="col-5 me-5">
+           <img class="img-fluid" src="{{ asset('img/over_ons.png') }}" alt="over_ons" />
+       </div>
+     <div class="col-3 ms-5">
+         <img class="img-fluid mt-5" src="{{ asset('img/sdg2.png') }}" alt="sdg2 geen honger">
+     </div>
+
+   </div>
+
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Eten ophalen{% endblock %}
+
+{% block body %}
+    <div class="container mt-5 text-center">
+
+        <h1>Eten ophalen</h1>
+        <p>Druk op de knop om de box te openen</p>
+
+        <a href="{{ path('app_pickup_open') }}"
+           class="btn btn-lg btn-success mt-3">
+            🔓 Box openen
+        </a>
+
+    </div>
+{% endblock %}

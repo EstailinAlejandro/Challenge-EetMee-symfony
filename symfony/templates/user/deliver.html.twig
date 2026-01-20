@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+
+        <h1>Eten afleveren</h1>
+        <br>
+
+        {% if boxFull %}
+            <div class="alert alert-warning">
+                ❌ Deze box is momenteel <strong>vol</strong>.
+                Probeer later opnieuw.
+            </div>
+        {% else %}
+            {{ form(form) }}
+        {% endif %}
+    </div>
+{% endblock %}
