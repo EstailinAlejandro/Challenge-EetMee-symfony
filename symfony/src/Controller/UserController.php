@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Box;
 use App\Entity\Food;
+use App\Entity\Temperature;
 use App\Entity\User;
 use App\Form\FoodType;
 use App\Form\RegistrationFormType;
@@ -17,10 +18,13 @@ use Symfony\Component\Routing\Attribute\Route;
 final class UserController extends AbstractController
 {
     #[Route('/user', name: 'app_user')]
-    public function index(): Response
+    public function index(EntityManagerInterface $em): Response
     {
+        $temperature = $em->getRepository(Temperature::class)->findBy([], ['dateTime' => 'DESC'], 1);
+        $temperature = $temperature ? $temperature[0] : null;
+
         return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
+            'temperature' => $temperature,
         ]);
     }
 
@@ -68,11 +72,14 @@ final class UserController extends AbstractController
     public function pickupOpen(EntityManagerInterface $em): Response
     {
         $box = $em->getRepository(Box::class)->find(1);
+        $lastFood = $em->getRepository(Food::class)
+            ->findOneBy([], ['id' => 'DESC']);
+
 
         $box->setPickupRequested(false);
         $box->setIsOpen(true);
-        $lastFood  = $box->getLastFood();
-        $lastFood->setUserPicked($this->getUser());
+
+        $lastFood->setPickupUser($this->getUser());
         $em->flush();
 
         return $this->redirectToRoute('app_user');

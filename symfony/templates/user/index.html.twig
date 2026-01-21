@@ -5,9 +5,14 @@
 {% block body %}
 <div class="container mt-5">
 
-    <h6 class=" text-center text-secondary">Laatst gecheckt om 12:00 op 14/10/2025</h6>
-    <h3 class="text-center">Box Temperatuur is 25°C</h1>
-        <br>
+    {% if temperature %}
+        <h6 class=" text-center text-secondary">Laatst gecheckt om {{ temperature.dateTime|date("H:i") }} op {{ temperature.dateTime|date("d/m/Y") }}</h6>
+        <h3 class="text-center">Box Temperatuur is {{ temperature.value }}°C</h3>
+    {% else %}
+        <h6 class="text-center text-secondary">Nog geen temperatuurdata beschikbaar</h6>
+    {% endif %}
+
+    <br>
 
         <h6 class=" text-center text-secondary"><a href="https://www.google.com/maps/place/De+Haagse+Hogeschool/@52.0670747,4.3213991,463m/data=!3m2!1e3!4b1!4m6!3m5!1s0x47c5b6e175fe3619:0x9d1994a880751d7a!8m2!3d52.0670747!4d4.323974!16s%2Fm%2F027_cbq?entry=ttu&g_ep=EgoyMDI2MDExMy4wIKXMDSoASAFQAw%3D%3D">HHS, Den Haag <i class="bi bi-geo-alt-fill"></i></a></h6>
 
