@@ -53,6 +53,8 @@ final class UserController extends AbstractController
             $entityManager->persist($food);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Eten is toegevoegd!');
+
             return $this->redirectToRoute('index');
         }
 
@@ -81,6 +83,8 @@ final class UserController extends AbstractController
 
         $lastFood->setPickupUser($this->getUser());
         $em->flush();
+
+        $this->addFlash('success', 'Eten is meegenomen!');
 
         return $this->redirectToRoute('app_user');
     }

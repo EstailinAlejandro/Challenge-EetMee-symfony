@@ -7,6 +7,7 @@ use App\Entity\Food;
 use App\Entity\User;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -18,8 +19,11 @@ class FoodType extends AbstractType
         $builder
             ->add('name')
             ->add('image')
-            ->add('portions')
-//            ->add('userDeliver', EntityType::class, [
+            ->add('portions', IntegerType::class, [
+                'attr' => ['min' => 1],
+            ])
+
+            //            ->add('userDeliver', EntityType::class, [
 //                'class' => User::class,
 //                'choice_label' => 'id',
 //            ])

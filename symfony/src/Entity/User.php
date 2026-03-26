@@ -56,10 +56,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Food::class, mappedBy: 'pickupUser')]
     private Collection $pickup;
 
+    /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'Reviewer')]
+    private Collection $review;
+
+    /**
+     * @var Collection<int, Review>
+     */
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'Reviewee')]
+    private Collection $reviewee;
+
     public function __construct()
     {
         $this->deliver = new ArrayCollection();
         $this->pickup = new ArrayCollection();
+        $this->review = new ArrayCollection();
+        $this->reviewee = new ArrayCollection();
     }
 
 
@@ -234,6 +248,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($pickup->getPickupUser() === $this) {
                 $pickup->setPickupUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReview(): Collection
+    {
+        return $this->review;
+    }
+
+    public function addReview(Review $review): static
+    {
+        if (!$this->review->contains($review)) {
+            $this->review->add($review);
+            $review->setReviewer($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReview(Review $review): static
+    {
+        if ($this->review->removeElement($review)) {
+            // set the owning side to null (unless already changed)
+            if ($review->getReviewer() === $this) {
+                $review->setReviewer(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Review>
+     */
+    public function getReviewee(): Collection
+    {
+        return $this->reviewee;
+    }
+
+    public function addReviewee(Review $reviewee): static
+    {
+        if (!$this->reviewee->contains($reviewee)) {
+            $this->reviewee->add($reviewee);
+            $reviewee->setReviewee($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReviewee(Review $reviewee): static
+    {
+        if ($this->reviewee->removeElement($reviewee)) {
+            // set the owning side to null (unless already changed)
+            if ($reviewee->getReviewee() === $this) {
+                $reviewee->setReviewee(null);
             }
         }
 
